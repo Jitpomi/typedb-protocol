@@ -22,8 +22,10 @@ fn main() -> std::io::Result<()> {
         "../../proto/version.proto",
     ];
 
-    tonic_build::configure()
+    let mut prost = prost_build::Config::new();
+    prost.protoc_executable(protoc_bin_vendored::protoc_bin_path().map_err(std::io::Error::other)?);
+    tonic_prost_build::configure()
         .server_mod_attribute(".", "#[allow(non_camel_case_types)]")
         .client_mod_attribute(".", "#[allow(non_camel_case_types)]")
-        .compile_protos(&protos, &["../.."])
+        .compile_with_config(prost, &protos, &["../.."])
 }

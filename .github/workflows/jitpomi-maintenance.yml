@@ -1,0 +1,14 @@
+name: JITPOMI compatibility validation
+on:
+  push:
+    branches: ["jitpomi/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo test --manifest-path grpc/rust/Cargo.toml

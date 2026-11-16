@@ -4,15 +4,23 @@
 
 [package]
 name = "typedb-protocol"
-version = "0.0.0"
+version = "3.13.4"
 edition = "2024"
 
 [lib]
 path = "lib.rs"
 
 [build-dependencies]
-tonic-build = "^0.12"
+tonic-prost-build = "0.14.9"
+prost-build = "0.14.6"
+protoc-bin-vendored = "3"
 
 [dependencies]
-prost = "^0.13"
-tonic = { version = "^0.12", features = ["tls", "tls-roots"] }
+prost = "0.14"
+tonic-prost = "0.14.9"
+tonic = { version = "0.14.9", features = ["tls-ring", "tls-native-roots"] }
+
+[dev-dependencies]
+rcgen = "0.14.10"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "sync"] }
+tokio-stream = { version = "0.1", features = ["net"] }
